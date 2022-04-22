@@ -1,0 +1,19 @@
+tm-def ::= 'fn' tm-ident alpha-set tm-block
+
+tm-block ::= '{' tm-stmt * '}'
+
+tm-stmt ::=
+    tm-step ';'
+    | 'branch' tm-step tm-block
+    | 'cycle' tm-block
+
+tm-step ::= 
+    alpha-set ('->' alpha-sym) ? tm-dir ? (or tm-step) *
+    | alpha-sym ('->' alpha-sym) ? tm-dir ? (or tm-step) *
+    | tm-dir
+    | break
+    | halt
+
+tm-dir ::= '<<' | '>>'
+
+alpha-set ::= '[' (alpha-sym ',') * alpha-sym ? ']'
